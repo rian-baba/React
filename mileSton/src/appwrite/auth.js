@@ -6,6 +6,7 @@ export class AuthServices {
     account;
 
     constructor(){
+        console.log("Config:", conf)
         this.client
         .setEndpoint(conf.appWriteUrl)
         .setProject(conf.appWriteProjectId)        
@@ -27,14 +28,20 @@ export class AuthServices {
     }
  }
 //------------------------------------------------------------------------------------------------------ 
- async login({email,password}){//-----------------------------------------------Login
-    // eslint-disable-next-line no-useless-catch
-    try {
-      return  await this.account.createEmailSession(email,password);
-    } catch (error) {
-        throw error;
-    }
- }
+async login({ email, password }) {
+  try {
+    // pehle session banao
+    await this.account.createEmailPasswordSession(email, password)
+
+
+    // fir user ka data lao
+    return await this.getCurrentUser();
+  } catch (error) {
+    throw error;
+  }
+}
+
+
 //--------------------------------------------------------------------------------------------------------
 async getCurrentUser() {//------------------------------------------------------Getcurrent user
     try {

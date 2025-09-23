@@ -23,9 +23,10 @@ function Signup() {
             navigate("/")
             
         }
-       } catch (error) {
-        setError(error)
-       }
+       } catch (err) {
+      console.error("Signup error:", err);
+      setError(err.message || "Something went wrong"); // ✅ sirf message render hoga
+    }
     }
    return (
     <div className="flex items-center justify-center">
