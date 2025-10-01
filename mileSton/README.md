@@ -1,7 +1,7 @@
 # Full-Stack React Application
 
 A **production-grade full-stack web application** built with modern technologies.  
-The project follows clean architecture principles with separate **frontend** and **backend layers**, reusable components, and an optimized developer workflow.  
+The project follows clean architecture principles with separaaddte **frontend** and **backend layers**, reusable components, and an optimized developer workflow.. 
 
 ## 🚀 Features
 - **Full-Stack Setup**

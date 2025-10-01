@@ -14,7 +14,7 @@ function App() {
     authServices.getCurrentUser()
       .then((userData) => {
         if (userData) {
-          dispatch(login(userData)); // ✅ direct bhejna hai
+          dispatch(login(userData)); 
         } else {
           dispatch(logout());
         }

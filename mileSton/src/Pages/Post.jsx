@@ -54,26 +54,14 @@ export default function Post() {
         setImageLoaded(false);
     };
 
-    // Try different URL methods for image display
     const getImageUrl = (fileId) => {
         if (!fileId) return null;
-        
-        console.log("Getting image URL for fileId:", fileId);
-        
-        // Primary: Direct file view (works on free plan)
         try {
-            const viewUrl = appwriteService.getFileView(fileId);
-            console.log("Using getFileView URL:", viewUrl);
-            return viewUrl;
+            return appwriteService.getFileView(fileId);
         } catch (error) {
-            console.log("getFileView failed, trying download URL");
-            // Fallback: Download URL
             try {
-                const downloadUrl = appwriteService.getFileDownload(fileId);
-                console.log("Using getFileDownload URL:", downloadUrl);
-                return downloadUrl;
-            } catch (downloadError) {
-                console.error("All URL methods failed");
+                return appwriteService.getFileDownload(fileId);
+            } catch {
                 return null;
             }
         }
@@ -98,10 +86,8 @@ export default function Post() {
         <div className="py-8">
             <Container>
                 <div className="w-full flex justify-center mb-6 relative border rounded-xl p-4 bg-white shadow-sm">
-                    /* Image Display */
                     {post.featuredImage ? (
                         <div className="relative w-full max-w-4xl">
-                            /* Loading State */
                             {!imageLoaded && !imageError && (
                                 <div className="w-full h-96 bg-gray-200 rounded-xl flex items-center justify-center">
                                     <div className="text-center">
@@ -111,7 +97,6 @@ export default function Post() {
                                 </div>
                             )}
 
-                            //* Error State with Better Message */
                             {imageError && (
                                 <div className="w-full h-96 bg-gradient-to-br from-gray-100 to-gray-200 border-2 border-gray-300 rounded-xl flex flex-col items-center justify-center p-6">
                                     <div className="text-center max-w-md">
@@ -121,34 +106,22 @@ export default function Post() {
                                         </h3>
                                         <p className="text-sm text-gray-600 mb-4">
                                             Image transformations are blocked on Appwrite free plan.
-                                            The image exists but can't be displayed as preview.
                                         </p>
-                                        
-                                        <div className="space-y-2">
-                                            <p className="text-xs text-gray-500">
-                                                <strong>Solution:</strong> Upgrade to Appwrite Pro plan or use direct file downloads
-                                            </p>
-                                            
-                                            {imageUrl && (
-                                                <a 
-                                                    href={imageUrl}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm mt-3"
-                                                >
-                                                    Download Original Image
-                                                </a>
-                                            )}
-                                        </div>
-                                        
-                                        <div className="mt-4 p-3 bg-gray-100 rounded text-xs break-all">
-                                            <strong>File ID:</strong> {post.featuredImage}
-                                        </div>
+
+                                        {imageUrl && (
+                                            <a 
+                                                href={imageUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm mt-3"
+                                            >
+                                                Download Original Image
+                                            </a>
+                                        )}
                                     </div>
                                 </div>
                             )}
 
-                            //* Actual Image */
                             {imageUrl && (
                                 <img
                                     src={imageUrl}
@@ -172,7 +145,6 @@ export default function Post() {
                         </div>
                     )}
 
-                    //* Author Controls */
                     {isAuthor && (
                         <div className="absolute right-6 top-6 bg-white rounded-lg shadow-lg p-2">
                             <Link to={`/edit-post/${post.$id}`}>
@@ -212,12 +184,12 @@ export default function Post() {
                     </div>
                 </div>
 
-                <div className="mt-8 pt-6 border-t">
-                    <Link 
-                        to="/" 
-                        className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+                 <div className="flex justify-center">
+                    <Link
+                        to="/"
+                        className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium rounded-full shadow hover:from-blue-600 hover:to-indigo-700 transition-all"
                     >
-                        ← Back to all posts
+                         Back Home
                     </Link>
                 </div>
             </Container>
